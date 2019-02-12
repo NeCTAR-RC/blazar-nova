@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+DEBVERS ?= $(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+VERSION ?= $(shell echo '$(DEBVERS)' | sed -e 's/^[[:digit:]]*://' -e 's/[-].*//' -e 's/~/./g')
+export OSLO_PACKAGE_VERSION=$(VERSION)
+export PBR_VERSION=$(VERSION)
+SHELL := /bin/sh -e
+
+include /usr/share/openstack-pkg-tools/pkgos.make
+
+%:
+	dh $@ --with python2
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f debian/*.upstart debian/*.init debian/*.service .testrepository
+
+get-orig-source:
+	uscan --verbose --force-download --rename --destdir=../build-area
+
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	OS_TEST_PATH=./blazarnova/tests/unit ostestr
+endif
