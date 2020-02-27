@@ -11,7 +11,7 @@ SHELL := /bin/sh -e
 include /usr/share/openstack-pkg-tools/pkgos.make
 
 %:
-	dh $@ --with python2
+	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -22,5 +22,5 @@ get-orig-source:
 
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 override_dh_auto_test:
-	OS_TEST_PATH=./blazarnova/tests/unit ostestr
+    PYTHONPATH=$(CURDIR) pkgos-dh_auto_test --no-py2 "b;azarnova.tests.unit.*"
 endif
