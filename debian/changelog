@@ -1,0 +1,11 @@
+blazarnova (1.2.0.5.g36cc96a+bionic-1) bionic-stein; urgency=medium
+
+  * Released
+
+ -- NeCTAR Jenkins (CI) <rc-melbourne@nectar.org.au>  Thu, 27 Feb 2020 16:37:18 +1100
+
+blazarnova (1.0-1) bionic; urgency=low
+
+  * Initial release.
+
+ -- Sam Morrison <sorrison@gmail.com>  Fri, 11 Nov 2016 09:29:53 +1000
